@@ -53,16 +53,19 @@ class ChatController extends Controller
                 $user_comment->user_id = $user->id;
                 $user_comment->comment_id = $comment->id;
                 $user_comment->save();
+
+                return json_encode(Comments::getComments());
             }else{
                 return json_encode($error);
             }
         }
     }
 
-    public function actionGetComment(){
-
+    public function actionGetComments()
+    {
         if (Yii::$app->request->post()) {
-            $comments = Comments::find()->all();
+
+              return json_encode(Comments::getComments());
         }
     }
 }

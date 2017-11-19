@@ -24,12 +24,10 @@ $this->title = "Chat";
                 <div class="clearfix"></div>
             </form>
             <ul>
-                <?php foreach ($comments as $coment ){ ?>
-                    <li>
-                        <label><?=$coment->user->login?></label>
-                        <p><?=$coment->comment?></p>
-                    </li>
-                <?php } ?>
+                <li ng-repeat="item in comment_list track by $index">
+                    <label>{{item.usernsme}}</label>
+                    <p>{{item.comment}}</p>
+                </li>
             </ul>
         </div>
 

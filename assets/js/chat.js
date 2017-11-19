@@ -10,13 +10,13 @@ chatModule .controller('ChatController', function($scope,$http) {
         })
         $http({
             method: 'POST',
-            url: '/admin/gallery/default/get-comments',
+            url: '/chat/get-comments',
             data: '&_csrf='+ yii.getCsrfToken(),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).then(function(response) {
 
             if (response.data != 0) {
-                $scope.products_list = response.data;
+                $scope.comment_list = response.data;
             }
 
         });
@@ -35,14 +35,17 @@ chatModule .controller('ChatController', function($scope,$http) {
                     $scope.products_list[$scope.products_list.length] = response.data;
                 }
             }else {
-                $scope.products_list = new Array(response.data);
+                $scope.comment_list = new Array(response.data);
             }
             console.log(response.data);
             if(response.data.indexOf(0) != -1){
                 $("form .username").addClass('error');
             }
-            if(response.data.indexOf(1) != -1){
+            else if(response.data.indexOf(1) != -1){
                 $("form .message").addClass('error');
+            }
+            else{
+                $scope.comment_list = response.data;
             }
 
         });
