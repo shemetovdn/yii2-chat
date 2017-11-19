@@ -10,8 +10,8 @@ class UsersComments extends ActiveRecord
     public function rules()
     {
         return [
-            [['ip'], 'ip'],
-            [['comment'], 'required'],
+            [['comment_id', 'user_id'], 'safe']
+
         ];
     }
 

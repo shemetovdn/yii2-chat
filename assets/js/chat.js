@@ -5,6 +5,9 @@ chatModule .controller('ChatController', function($scope,$http) {
 
 
     Entity.init = function(){
+        $("form input, form textarea").change(function(){
+            $(this).removeClass('error');
+        })
         $http({
             method: 'POST',
             url: '/admin/gallery/default/get-comments',
@@ -18,12 +21,13 @@ chatModule .controller('ChatController', function($scope,$http) {
 
         });
     }
-    Entity.addComment = function(val){
-        var id = val;
+    Entity.addComment = function(){
+        var username = $("form .username").val();
+        var message = $("form .message").val();
         $http({
             method: 'POST',
             url: '/chat/add-comment',
-            data: '&_csrf='+ yii.getCsrfToken(),
+            data: '&_csrf='+ yii.getCsrfToken()+'&username='+username+'&message='+message,
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).then(function(response) {
             if ($scope.products_list) {
@@ -32,6 +36,13 @@ chatModule .controller('ChatController', function($scope,$http) {
                 }
             }else {
                 $scope.products_list = new Array(response.data);
+            }
+            console.log(response.data);
+            if(response.data.indexOf(0) != -1){
+                $("form .username").addClass('error');
+            }
+            if(response.data.indexOf(1) != -1){
+                $("form .message").addClass('error');
             }
 
         });

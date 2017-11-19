@@ -11,7 +11,12 @@ $this->title = "Chat";
         <div  class="col-md-6">
             <form>
                 <div class="form-group">
-                    <textarea class="form-control"></textarea>
+                    <label> Username</label>
+                    <input class="form-control username">
+                </div>
+                <div class="form-group">
+                    <label> Message</label>
+                    <textarea class="form-control message"></textarea>
                 </div>
                 <div class="form-group pull-right">
                     <button class="btn btn-primary" ng-click="chat.addComment()">Send</button>

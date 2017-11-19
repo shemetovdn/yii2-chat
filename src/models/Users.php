@@ -10,8 +10,9 @@ class Users extends ActiveRecord
     public function rules()
     {
         return [
+            [['comment'], 'safe'],
             [['ip'], 'ip'],
-            [['comment'], 'required'],
+
         ];
     }
 }

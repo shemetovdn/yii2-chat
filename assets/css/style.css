@@ -5,3 +5,6 @@
 .red {
     color: red;
 }
+.error{
+    border: solid 1px red!important;
+}

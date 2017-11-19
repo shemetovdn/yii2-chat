@@ -13,8 +13,7 @@ class Comments extends ActiveRecord
     public function rules()
     {
         return [
-            [['ip'], 'ip'],
-            [['comment'], 'required'],
+            [['comment'], 'safe']
         ];
     }
     public function getUser(){
