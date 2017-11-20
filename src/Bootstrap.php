@@ -17,7 +17,7 @@ class Bootstrap implements BootstrapInterface{
         $app->getUrlManager()->addRules([
             'chat' => 'chat/chat/index',
             'chat/add-comment' => 'chat/chat/add-comment',
-            'chat/get-comments' => 'chat/chat/get-comments',
+            'chat/get-data' => 'chat/chat/get-data',
         ], false);
 
         /*

@@ -39,9 +39,16 @@ class ChatController extends Controller
                 $user_ip = $_SERVER['REMOTE_ADDR'];
                 $user = Users::find()->where(['login' =>$username, 'ip' => $user_ip])->one();
                 if (empty($user)) {
+                    $user_data = json_decode(file_get_contents('http://api.sypexgeo.net/json/'.$_SERVER['REMOTE_ADDR']));
+                    if (!empty($user_data->city)){
+                        $city = $user_data->city->name_en;
+                    }else{
+                        $city = "unknown";
+                    }
                     $user = new Users();
                     $user->login = $username;
                     $user->ip = $user_ip;
+                    $user->city = $city;
                     $user->save();
 
                 }
@@ -54,9 +61,14 @@ class ChatController extends Controller
                 $user_comment->comment_id = $comment->id;
                 $user_comment->save();
 
-                return json_encode(Comments::getComments());
+                $data = array(
+                    "comments" => Comments::getComments(),
+                    "users" => Users::getUsers()
+                );
+
+                return json_encode($data);
             }else{
-                return json_encode($error);
+                return json_encode(['errors' => $error]);
             }
         }
     }
@@ -66,6 +78,19 @@ class ChatController extends Controller
         if (Yii::$app->request->post()) {
 
               return json_encode(Comments::getComments());
+        }
+    }
+
+    public function actionGetData()
+    {
+        if (Yii::$app->request->post()) {
+
+            $data = array(
+                "comments" => Comments::getComments(),
+                "users" => Users::getUsers()
+            );
+
+            return json_encode($data);
         }
     }
 }

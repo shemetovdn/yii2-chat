@@ -10,15 +10,12 @@ chatModule .controller('ChatController', function($scope,$http) {
         })
         $http({
             method: 'POST',
-            url: '/chat/get-comments',
+            url: '/chat/get-data',
             data: '&_csrf='+ yii.getCsrfToken(),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).then(function(response) {
-
-            if (response.data != 0) {
-                $scope.comment_list = response.data;
-            }
-
+                $scope.comment_list = response.data.comments;
+                $scope.users_list = response.data.users;
         });
     }
     Entity.addComment = function(){
@@ -30,22 +27,24 @@ chatModule .controller('ChatController', function($scope,$http) {
             data: '&_csrf='+ yii.getCsrfToken()+'&username='+username+'&message='+message,
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).then(function(response) {
-            if ($scope.products_list) {
-                if (response.data != 0) {
-                    $scope.products_list[$scope.products_list.length] = response.data;
-                }
-            }else {
-                $scope.comment_list = new Array(response.data);
-            }
+
             console.log(response.data);
-            if(response.data.indexOf(0) != -1){
-                $("form .username").addClass('error');
-            }
-            else if(response.data.indexOf(1) != -1){
-                $("form .message").addClass('error');
+            if(response.data.errors){
+                if(response.data.errors.indexOf(0) != -1){
+                    $("form .username").addClass('error');
+                }
+                else if(response.data.errors.indexOf(1) != -1){
+                    $("form .message").addClass('error');
+                }
             }
             else{
-                $scope.comment_list = response.data;
+                console.log(response.data.comments);
+                $scope.comment_list = response.data.comments;
+                $scope.users_list = response.data.users;
+
+                $('ul.comments ').animate({
+                    scrollTop: $("ul.comments li:last-child").offset().top
+                }, 2000);
             }
 
         });

@@ -8,3 +8,18 @@
 .error{
     border: solid 1px red!important;
 }
+
+.users li{
+    list-style: none;
+}
+.comments li{
+    list-style: none;
+}
+.comments li p{
+    border: solid 1px #eee;
+    padding: 10px;
+}
+.comments{
+    max-height: 250px;
+    overflow: auto;
+}

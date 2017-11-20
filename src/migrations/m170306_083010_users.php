@@ -18,6 +18,7 @@ class m170306_083010_users extends Migration
 			'id' => $this->primaryKey(),
 			'ip' => $this->string(15)->notNull(),
 			'login' => $this->string(255),
+            'city' => $this->string(255),
 		], $tableOptions);
 
     }
